@@ -8,6 +8,7 @@ export default defineConfig({
     setupFiles: [],
     testTimeout: 60000,
     pool: 'forks',
+    fileParallelism: false,
   },
   plugins: [
     swc.vite({
