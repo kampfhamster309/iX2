@@ -1,0 +1,32 @@
+{
+  "app": {
+    "name": "iX2 Real Estate Management",
+    "loading": "Loading...",
+    "error": "An error occurred"
+  },
+  "nav": {
+    "dashboard": "Dashboard",
+    "properties": "Properties",
+    "tenants": "Tenants",
+    "contracts": "Contracts",
+    "accounting": "Accounting",
+    "maintenance": "Maintenance",
+    "settings": "Settings"
+  },
+  "auth": {
+    "login": "Log in",
+    "logout": "Log out",
+    "email": "Email",
+    "password": "Password"
+  },
+  "common": {
+    "save": "Save",
+    "cancel": "Cancel",
+    "delete": "Delete",
+    "edit": "Edit",
+    "create": "Create",
+    "search": "Search",
+    "filter": "Filter",
+    "back": "Back"
+  }
+}
