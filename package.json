@@ -2,6 +2,7 @@
   "name": "ix2",
   "private": true,
   "version": "0.1.0",
+  "type": "module",
   "scripts": {
     "dev": "concurrently \"pnpm --filter @ix2/api dev\" \"pnpm --filter @ix2/web dev\"",
     "build": "pnpm --filter './apps/*' --filter './packages/*' run build",
@@ -31,6 +32,12 @@
     ],
     "*.{json,md}": [
       "prettier --write"
+    ]
+  },
+  "pnpm": {
+    "onlyBuiltDependencies": [
+      "esbuild",
+      "simple-git-hooks"
     ]
   }
 }
