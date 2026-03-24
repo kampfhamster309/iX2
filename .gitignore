@@ -43,3 +43,11 @@ coverage/
 
 # Prisma
 prisma/migrations/*/migration.sql
+
+# Agent / project management files
+AGENTS.md
+CLAUDE.md
+cache.md
+human_to_do.md
+rough_plan.md
+development_plan.md
