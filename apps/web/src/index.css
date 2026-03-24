@@ -14,11 +14,7 @@
     --ring: 199 89% 48%;
   }
 
-  * {
-    @apply border-border;
-  }
-
   body {
-    @apply bg-background text-foreground;
+    @apply bg-gray-50 text-gray-900;
   }
 }
