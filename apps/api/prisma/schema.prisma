@@ -15,14 +15,41 @@ enum Role {
   TENANT
 }
 
+enum UnitType {
+  RESIDENTIAL
+  COMMERCIAL
+  PARKING
+  STORAGE
+}
+
+enum UnitStatus {
+  VACANT
+  OCCUPIED
+  MAINTENANCE
+}
+
+enum PropertyStatus {
+  ACTIVE
+  INACTIVE
+}
+
+enum ContractStatus {
+  ACTIVE
+  EXPIRED
+  TERMINATED
+}
+
 model User {
-  id            String         @id @default(cuid())
-  email         String         @unique
-  passwordHash  String
-  role          Role           @default(TENANT)
-  createdAt     DateTime       @default(now())
-  updatedAt     DateTime       @updatedAt
-  refreshTokens RefreshToken[]
+  id                String            @id @default(cuid())
+  email             String            @unique
+  passwordHash      String
+  role              Role              @default(TENANT)
+  createdAt         DateTime          @default(now())
+  updatedAt         DateTime          @updatedAt
+  refreshTokens     RefreshToken[]
+  ownedAs           Owner?
+  tenantProfile     Tenant?
+  managedProperties PropertyManager[]
 
   @@map("users")
 }
@@ -38,4 +65,101 @@ model RefreshToken {
   createdAt DateTime  @default(now())
 
   @@map("refresh_tokens")
+}
+
+model Owner {
+  id         String     @id @default(cuid())
+  name       String
+  email      String?
+  phone      String?
+  address    String?
+  userId     String?    @unique
+  user       User?      @relation(fields: [userId], references: [id])
+  properties Property[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@map("owners")
+}
+
+model Property {
+  id          String            @id @default(cuid())
+  name        String
+  address     String
+  city        String
+  postalCode  String
+  country     String            @default("DE")
+  status      PropertyStatus    @default(ACTIVE)
+  ownerId     String
+  owner       Owner             @relation(fields: [ownerId], references: [id])
+  units       Unit[]
+  managers    PropertyManager[]
+  createdAt   DateTime          @default(now())
+  updatedAt   DateTime          @updatedAt
+
+  @@map("properties")
+}
+
+model PropertyManager {
+  id         String   @id @default(cuid())
+  propertyId String
+  property   Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  userId     String
+  user       User     @relation(fields: [userId], references: [id])
+  assignedAt DateTime @default(now())
+
+  @@unique([propertyId, userId])
+  @@map("property_managers")
+}
+
+model Unit {
+  id         String     @id @default(cuid())
+  name       String
+  type       UnitType
+  status     UnitStatus @default(VACANT)
+  floor      Int?
+  areaSqm    Decimal?   @db.Decimal(8, 2)
+  rooms      Decimal?   @db.Decimal(4, 1)
+  propertyId String
+  property   Property   @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  contracts  Contract[]
+  createdAt  DateTime   @default(now())
+  updatedAt  DateTime   @updatedAt
+
+  @@map("units")
+}
+
+model Tenant {
+  id          String     @id @default(cuid())
+  firstName   String
+  lastName    String
+  email       String?
+  phone       String?
+  dateOfBirth DateTime?
+  address     String?
+  userId      String?    @unique
+  user        User?      @relation(fields: [userId], references: [id])
+  contracts   Contract[]
+  createdAt   DateTime   @default(now())
+  updatedAt   DateTime   @updatedAt
+
+  @@map("tenants")
+}
+
+model Contract {
+  id            String         @id @default(cuid())
+  unitId        String
+  unit          Unit           @relation(fields: [unitId], references: [id])
+  tenantId      String
+  tenant        Tenant         @relation(fields: [tenantId], references: [id])
+  startDate     DateTime
+  endDate       DateTime?
+  rentAmount    Decimal        @db.Decimal(10, 2)
+  depositAmount Decimal?       @db.Decimal(10, 2)
+  status        ContractStatus @default(ACTIVE)
+  notes         String?
+  createdAt     DateTime       @default(now())
+  updatedAt     DateTime       @updatedAt
+
+  @@map("contracts")
 }
