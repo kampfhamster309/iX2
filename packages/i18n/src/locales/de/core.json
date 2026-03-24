@@ -17,7 +17,9 @@
     "login": "Anmelden",
     "logout": "Abmelden",
     "email": "E-Mail",
-    "password": "Passwort"
+    "password": "Passwort",
+    "loginTitle": "Bei iX2 anmelden",
+    "error": "Ungültige E-Mail oder falsches Passwort"
   },
   "common": {
     "save": "Speichern",
@@ -28,5 +30,12 @@
     "search": "Suchen",
     "filter": "Filtern",
     "back": "Zurück"
+  },
+  "dashboard": {
+    "welcome": "Willkommen, {{name}}",
+    "intro": "Wählen Sie einen Bereich aus der Navigation aus."
+  },
+  "properties": {
+    "empty": "Keine Immobilien gefunden."
   }
 }

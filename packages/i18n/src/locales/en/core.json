@@ -17,7 +17,9 @@
     "login": "Log in",
     "logout": "Log out",
     "email": "Email",
-    "password": "Password"
+    "password": "Password",
+    "loginTitle": "Sign in to iX2",
+    "error": "Invalid email or password"
   },
   "common": {
     "save": "Save",
@@ -28,5 +30,12 @@
     "search": "Search",
     "filter": "Filter",
     "back": "Back"
+  },
+  "dashboard": {
+    "welcome": "Welcome, {{name}}",
+    "intro": "Select a section from the navigation to get started."
+  },
+  "properties": {
+    "empty": "No properties found."
   }
 }
