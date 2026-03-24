@@ -65,6 +65,7 @@ async function silentRefresh(): Promise<string | null> {
     const { data } = await axios.post<{ accessToken: string; refreshToken: string }>(
       `${BASE_URL}/auth/refresh`,
       { refreshToken: rt },
+      { baseURL: window.location.origin },
     );
     setAccessToken(data.accessToken);
     setRefreshToken(data.refreshToken);
