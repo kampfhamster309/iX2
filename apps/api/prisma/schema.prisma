@@ -274,3 +274,58 @@ model JournalLine {
   @@schema("accounting")
   @@map("journal_lines")
 }
+
+enum InvoiceStatus {
+  DRAFT
+  ISSUED
+  PAID
+  PARTIALLY_PAID
+  OVERDUE
+  CANCELLED
+
+  @@schema("accounting")
+}
+
+enum PaymentMethod {
+  BANK_TRANSFER
+  CASH
+  DIRECT_DEBIT
+  OTHER
+
+  @@schema("accounting")
+}
+
+model Invoice {
+  id             String        @id @default(cuid())
+  contractId     String
+  periodMonth    Int
+  periodYear     Int
+  amountDue      Decimal       @db.Decimal(10, 2)
+  amountPaid     Decimal       @default(0) @db.Decimal(10, 2)
+  dueDate        DateTime
+  issuedAt       DateTime?
+  status         InvoiceStatus @default(DRAFT)
+  journalEntryId String?
+  payments       Payment[]
+  createdAt      DateTime      @default(now())
+  updatedAt      DateTime      @updatedAt
+
+  @@unique([contractId, periodMonth, periodYear])
+  @@schema("accounting")
+  @@map("invoices")
+}
+
+model Payment {
+  id             String        @id @default(cuid())
+  invoiceId      String
+  invoice        Invoice       @relation(fields: [invoiceId], references: [id])
+  amount         Decimal       @db.Decimal(10, 2)
+  paymentDate    DateTime
+  method         PaymentMethod @default(BANK_TRANSFER)
+  reference      String?
+  journalEntryId String?
+  createdAt      DateTime      @default(now())
+
+  @@schema("accounting")
+  @@map("payments")
+}
