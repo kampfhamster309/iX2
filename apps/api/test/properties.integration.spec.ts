@@ -414,6 +414,7 @@ describe('DELETE /properties/:propertyId/units/:id', () => {
         tenantId: tenant.id,
         startDate: '2024-01-01',
         rentAmount: 800,
+        type: 'RESIDENTIAL_LEASE',
       },
     });
 
@@ -455,6 +456,7 @@ describe('POST /contracts', () => {
         startDate: '2024-01-01',
         rentAmount: 950,
         depositAmount: 1900,
+        type: 'RESIDENTIAL_LEASE',
       },
     });
     expect(res.statusCode).toBe(201);
@@ -492,6 +494,7 @@ describe('POST /contracts', () => {
         tenantId: tenant1.id,
         startDate: '2024-01-01',
         rentAmount: 950,
+        type: 'RESIDENTIAL_LEASE',
       },
     });
 
@@ -505,6 +508,7 @@ describe('POST /contracts', () => {
         tenantId: tenant2.id,
         startDate: '2024-06-01',
         rentAmount: 1000,
+        type: 'RESIDENTIAL_LEASE',
       },
     });
     expect(res.statusCode).toBe(409);
@@ -538,6 +542,7 @@ describe('POST /contracts/:id/terminate', () => {
         tenantId: tenant.id,
         startDate: '2024-01-01',
         rentAmount: 900,
+        type: 'RESIDENTIAL_LEASE',
       },
     });
     const contract = JSON.parse(contractRes.body) as { id: string };
@@ -586,13 +591,25 @@ describe('GET /contracts — filtering', () => {
       method: 'POST',
       url: '/contracts',
       headers: { Authorization: adminAuth },
-      payload: { unitId: unit1.id, tenantId: t1.id, startDate: '2024-01-01', rentAmount: 800 },
+      payload: {
+        unitId: unit1.id,
+        tenantId: t1.id,
+        startDate: '2024-01-01',
+        rentAmount: 800,
+        type: 'RESIDENTIAL_LEASE',
+      },
     });
     const c2Res = await app.inject({
       method: 'POST',
       url: '/contracts',
       headers: { Authorization: adminAuth },
-      payload: { unitId: unit2.id, tenantId: t2.id, startDate: '2024-01-01', rentAmount: 900 },
+      payload: {
+        unitId: unit2.id,
+        tenantId: t2.id,
+        startDate: '2024-01-01',
+        rentAmount: 900,
+        type: 'RESIDENTIAL_LEASE',
+      },
     });
     const c1 = JSON.parse(c1Res.body) as { id: string };
     void c2Res;
@@ -653,13 +670,25 @@ describe('GET /contracts — filtering', () => {
       method: 'POST',
       url: '/contracts',
       headers: { Authorization: adminAuth },
-      payload: { unitId: u1.id, tenantId: t1.id, startDate: '2024-01-01', rentAmount: 800 },
+      payload: {
+        unitId: u1.id,
+        tenantId: t1.id,
+        startDate: '2024-01-01',
+        rentAmount: 800,
+        type: 'RESIDENTIAL_LEASE',
+      },
     });
     await app.inject({
       method: 'POST',
       url: '/contracts',
       headers: { Authorization: adminAuth },
-      payload: { unitId: u2.id, tenantId: t2.id, startDate: '2024-01-01', rentAmount: 900 },
+      payload: {
+        unitId: u2.id,
+        tenantId: t2.id,
+        startDate: '2024-01-01',
+        rentAmount: 900,
+        type: 'RESIDENTIAL_LEASE',
+      },
     });
 
     const res = await app.inject({
@@ -670,5 +699,190 @@ describe('GET /contracts — filtering', () => {
     expect(res.statusCode).toBe(200);
     const body = JSON.parse(res.body) as { data: unknown[]; total: number };
     expect(body.total).toBe(1);
+  });
+});
+
+// ─── TICKET-003a Tests ──────────────────────────────────────────────────────
+
+describe('POST /tenants — company tenant', () => {
+  it('creates a company tenant with isCompany: true', async () => {
+    const adminAuth = await createAdminUser();
+
+    const res = await app.inject({
+      method: 'POST',
+      url: '/tenants',
+      headers: { Authorization: adminAuth },
+      payload: {
+        firstName: 'Test',
+        lastName: 'GmbH',
+        isCompany: true,
+        companyName: 'Test GmbH',
+        legalForm: 'GmbH',
+      },
+    });
+    expect(res.statusCode).toBe(201);
+    const tenant = JSON.parse(res.body) as { isCompany: boolean; companyName: string };
+    expect(tenant.isCompany).toBe(true);
+    expect(tenant.companyName).toBe('Test GmbH');
+  });
+
+  it('returns 400 when isCompany is true but companyName is missing', async () => {
+    const adminAuth = await createAdminUser();
+
+    const res = await app.inject({
+      method: 'POST',
+      url: '/tenants',
+      headers: { Authorization: adminAuth },
+      payload: {
+        firstName: 'Missing',
+        lastName: 'Company',
+        isCompany: true,
+      },
+    });
+    expect(res.statusCode).toBe(400);
+  });
+});
+
+describe('POST /contracts — type field', () => {
+  it('returns 400 when type is missing', async () => {
+    const adminAuth = await createAdminUser();
+    const owner = await createTestOwner();
+    const prop = await createTestProperty(adminAuth, owner.id);
+
+    const unitRes = await app.inject({
+      method: 'POST',
+      url: `/properties/${prop.id}/units`,
+      headers: { Authorization: adminAuth },
+      payload: { name: 'Wohnung 1', type: 'RESIDENTIAL' },
+    });
+    const unit = JSON.parse(unitRes.body) as { id: string };
+    const tenant = await prisma.tenant.create({ data: { firstName: 'No', lastName: 'Type' } });
+
+    const res = await app.inject({
+      method: 'POST',
+      url: '/contracts',
+      headers: { Authorization: adminAuth },
+      payload: {
+        unitId: unit.id,
+        tenantId: tenant.id,
+        startDate: '2024-01-01',
+        rentAmount: 800,
+        // type intentionally omitted
+      },
+    });
+    expect(res.statusCode).toBe(400);
+  });
+
+  it('creates a contract with type COMMERCIAL_LEASE and returns it in response', async () => {
+    const adminAuth = await createAdminUser();
+    const owner = await createTestOwner();
+    const prop = await createTestProperty(adminAuth, owner.id);
+
+    const unitRes = await app.inject({
+      method: 'POST',
+      url: `/properties/${prop.id}/units`,
+      headers: { Authorization: adminAuth },
+      payload: { name: 'Ladenfläche', type: 'COMMERCIAL' },
+    });
+    const unit = JSON.parse(unitRes.body) as { id: string };
+    const tenant = await prisma.tenant.create({
+      data: {
+        firstName: 'Commercial',
+        lastName: 'Tenant',
+        isCompany: true,
+        companyName: 'Shop GmbH',
+      },
+    });
+
+    const res = await app.inject({
+      method: 'POST',
+      url: '/contracts',
+      headers: { Authorization: adminAuth },
+      payload: {
+        unitId: unit.id,
+        tenantId: tenant.id,
+        startDate: '2024-01-01',
+        rentAmount: 2000,
+        type: 'COMMERCIAL_LEASE',
+      },
+    });
+    expect(res.statusCode).toBe(201);
+    const contract = JSON.parse(res.body) as { type: string };
+    expect(contract.type).toBe('COMMERCIAL_LEASE');
+  });
+});
+
+describe('POST /properties/:id/notes', () => {
+  it('MANAGER adds a note and gets 201', async () => {
+    const adminAuth = await createAdminUser();
+    const managerAuth = await createManagerUser();
+    const owner = await createTestOwner();
+    const managerUser = await prisma.user.findUnique({ where: { email: 'manager@test.local' } });
+
+    const prop = await createTestProperty(adminAuth, owner.id);
+    await app.inject({
+      method: 'POST',
+      url: `/properties/${prop.id}/managers`,
+      headers: { Authorization: adminAuth },
+      payload: { userId: managerUser!.id },
+    });
+
+    const res = await app.inject({
+      method: 'POST',
+      url: `/properties/${prop.id}/notes`,
+      headers: { Authorization: managerAuth },
+      payload: { content: 'Roof inspection completed' },
+    });
+    expect(res.statusCode).toBe(201);
+    const note = JSON.parse(res.body) as { content: string; propertyId: string };
+    expect(note.content).toBe('Roof inspection completed');
+    expect(note.propertyId).toBe(prop.id);
+  });
+
+  it('TENANT gets 403 when adding a note', async () => {
+    const adminAuth = await createAdminUser();
+    const tenantAuth = await createTenantUser();
+    const owner = await createTestOwner();
+    const prop = await createTestProperty(adminAuth, owner.id);
+
+    const res = await app.inject({
+      method: 'POST',
+      url: `/properties/${prop.id}/notes`,
+      headers: { Authorization: tenantAuth },
+      payload: { content: 'Should not work' },
+    });
+    expect(res.statusCode).toBe(403);
+  });
+});
+
+describe('GET /properties/:id/notes', () => {
+  it('returns notes in chronological order', async () => {
+    const adminAuth = await createAdminUser();
+    const owner = await createTestOwner();
+    const prop = await createTestProperty(adminAuth, owner.id);
+
+    await app.inject({
+      method: 'POST',
+      url: `/properties/${prop.id}/notes`,
+      headers: { Authorization: adminAuth },
+      payload: { content: 'First note' },
+    });
+    await app.inject({
+      method: 'POST',
+      url: `/properties/${prop.id}/notes`,
+      headers: { Authorization: adminAuth },
+      payload: { content: 'Second note' },
+    });
+
+    const res = await app.inject({
+      method: 'GET',
+      url: `/properties/${prop.id}/notes`,
+      headers: { Authorization: adminAuth },
+    });
+    expect(res.statusCode).toBe(200);
+    const notes = JSON.parse(res.body) as Array<{ content: string }>;
+    expect(notes.length).toBe(2);
+    expect(notes[0].content).toBe('First note');
+    expect(notes[1].content).toBe('Second note');
   });
 });

@@ -1,4 +1,11 @@
-import { PrismaClient, Role, UnitType, ContractStatus, AccountType } from '@prisma/client';
+import {
+  PrismaClient,
+  Role,
+  UnitType,
+  ContractStatus,
+  ContractType,
+  AccountType,
+} from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
@@ -197,6 +204,8 @@ async function main() {
       postalCode: '80333',
       country: 'DE',
       ownerId: owner.id,
+      yearBuilt: 1965,
+      numberOfFloors: 4,
     },
   });
 
@@ -211,6 +220,8 @@ async function main() {
       postalCode: '10115',
       country: 'DE',
       ownerId: owner.id,
+      yearBuilt: 1998,
+      numberOfFloors: 6,
     },
   });
 
@@ -371,6 +382,9 @@ async function main() {
       email: 'kontakt@example-gmbh.de',
       phone: '+49 30 1234567',
       address: 'Geschäftsstraße 1, 10115 Berlin',
+      isCompany: true,
+      companyName: 'Example GmbH',
+      legalForm: 'GmbH',
     },
   });
 
@@ -389,6 +403,7 @@ async function main() {
       rentAmount: 950,
       depositAmount: 1900,
       status: ContractStatus.ACTIVE,
+      type: ContractType.RESIDENTIAL_LEASE,
       notes: 'Erstmietvertrag, unbefristet',
     },
   });
@@ -405,6 +420,7 @@ async function main() {
       rentAmount: 1100,
       depositAmount: 2200,
       status: ContractStatus.ACTIVE,
+      type: ContractType.RESIDENTIAL_LEASE,
       notes: 'Unbefristeter Mietvertrag',
     },
   });
@@ -421,6 +437,7 @@ async function main() {
       rentAmount: 2400,
       depositAmount: 4800,
       status: ContractStatus.ACTIVE,
+      type: ContractType.COMMERCIAL_LEASE,
       notes: 'Gewerberaummietvertrag, 5 Jahre',
     },
   });
