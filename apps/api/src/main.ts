@@ -3,10 +3,24 @@ import { NestFactory } from '@nestjs/core';
 import { FastifyAdapter, NestFastifyApplication } from '@nestjs/platform-fastify';
 import { ValidationPipe } from '@nestjs/common';
 import { SwaggerModule, DocumentBuilder } from '@nestjs/swagger';
+import multipart from '@fastify/multipart';
+import fastifyStatic from '@fastify/static';
+import * as path from 'path';
 import { AppModule } from './app.module';
 
 async function bootstrap() {
   const app = await NestFactory.create<NestFastifyApplication>(AppModule, new FastifyAdapter());
+
+  // Register multipart before static
+  await app.register(multipart, { limits: { fileSize: 10 * 1024 * 1024 } }); // 10MB
+
+  // Register static file serving for receipt downloads
+  const uploadDir = path.resolve(process.env.UPLOAD_DIR ?? './uploads');
+  await app.register(fastifyStatic, {
+    root: uploadDir,
+    prefix: '/uploads/',
+    serve: false, // don't auto-serve; we control it via endpoint
+  });
 
   app.enableCors({
     origin: process.env.CORS_ORIGIN ?? 'http://localhost:3000',

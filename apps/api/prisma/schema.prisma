@@ -240,6 +240,7 @@ model Account {
   isSystem     Boolean       @default(false)
   description  String?
   journalLines JournalLine[]
+  expenses     Expense[]
   createdAt    DateTime      @default(now())
   updatedAt    DateTime      @updatedAt
 
@@ -328,4 +329,47 @@ model Payment {
 
   @@schema("accounting")
   @@map("payments")
+}
+
+enum PayableStatus {
+  PENDING
+  PAID
+
+  @@schema("accounting")
+}
+
+model Expense {
+  id                String    @id @default(cuid())
+  propertyId        String
+  unitId            String?
+  accountId         String
+  account           Account   @relation(fields: [accountId], references: [id])
+  amount            Decimal   @db.Decimal(10, 2)
+  date              DateTime
+  vendor            String?
+  description       String
+  receiptPath       String?
+  isPaid            Boolean   @default(true)
+  maintenanceTaskId String?
+  journalEntryId    String?
+  payable           Payable?
+  createdById       String
+  createdAt         DateTime  @default(now())
+  updatedAt         DateTime  @updatedAt
+
+  @@schema("accounting")
+  @@map("expenses")
+}
+
+model Payable {
+  id             String        @id @default(cuid())
+  expenseId      String        @unique
+  expense        Expense       @relation(fields: [expenseId], references: [id], onDelete: Cascade)
+  dueDate        DateTime
+  status         PayableStatus @default(PENDING)
+  paidAt         DateTime?
+  journalEntryId String?
+
+  @@schema("accounting")
+  @@map("payables")
 }
