@@ -18,6 +18,7 @@ const ACCOUNTING_SUB_ITEMS = [
   { key: 'nav.invoicesNav', path: '/accounting/invoices' },
   { key: 'nav.expenses', path: '/accounting/expenses' },
   { key: 'nav.deposits', path: '/accounting/deposits' },
+  { key: 'nav.reports', path: '/accounting/reports' },
   { key: 'nav.journalEntries', path: '/accounting/journal-entries' },
 ];
 

@@ -23,6 +23,7 @@ import { ExpensesPage } from '@/pages/accounting/ExpensesPage';
 import { ExpenseDetailPage } from '@/pages/accounting/ExpenseDetailPage';
 import { DepositsPage } from '@/pages/accounting/DepositsPage';
 import { DepositDetailPage } from '@/pages/accounting/DepositDetailPage';
+import { ReportsPage } from '@/pages/accounting/ReportsPage';
 import '@/i18n';
 import '@/index.css';
 
@@ -154,6 +155,13 @@ const accountingDepositDetailRoute = createRoute({
   component: DepositDetailPage,
 });
 
+const accountingReportsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/accounting/reports',
+  beforeLoad: requireAuth,
+  component: ReportsPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -170,6 +178,7 @@ const routeTree = rootRoute.addChildren([
   accountingExpenseDetailRoute,
   accountingDepositsRoute,
   accountingDepositDetailRoute,
+  accountingReportsRoute,
 ]);
 
 const router = createRouter({ routeTree });
