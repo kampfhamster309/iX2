@@ -77,6 +77,9 @@ importers:
       class-validator:
         specifier: ^0.14.0
         version: 0.14.4
+      decimal.js:
+        specifier: ^10.6.0
+        version: 10.6.0
       passport:
         specifier: ^0.7.0
         version: 0.7.0
