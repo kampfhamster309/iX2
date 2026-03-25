@@ -35,6 +35,9 @@
     ]
   },
   "pnpm": {
+    "overrides": {
+      "fastify": "5.8.4"
+    },
     "onlyBuiltDependencies": [
       "@nestjs/core",
       "@prisma/client",

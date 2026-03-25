@@ -4,6 +4,9 @@ settings:
   autoInstallPeers: true
   excludeLinksFromLockfile: false
 
+overrides:
+  fastify: 5.8.4
+
 importers:
 
   .:
@@ -84,7 +87,7 @@ importers:
         specifier: ^10.6.0
         version: 10.6.0
       fastify:
-        specifier: ^5.8.4
+        specifier: 5.8.4
         version: 5.8.4
       passport:
         specifier: ^0.7.0
@@ -2536,9 +2539,6 @@ packages:
 
   fastify-plugin@5.1.0:
     resolution: {integrity: sha512-FAIDA8eovSt5qcDgcBvDuX/v0Cjz0ohGhENZ/wpc3y+oZCY2afZ9Baqql3g/lC+OHRnciQol4ww7tuthOb9idw==}
-
-  fastify@5.8.2:
-    resolution: {integrity: sha512-lZmt3navvZG915IE+f7/TIVamxIwmBd+OMB+O9WBzcpIwOo6F0LTh0sluoMFk5VkrKTvvrwIaoJPkir4Z+jtAg==}
 
   fastify@5.8.4:
     resolution: {integrity: sha512-sa42J1xylbBAYUWALSBoyXKPDUvM3OoNOibIefA+Oha57FryXKKCZarA1iDntOCWp3O35voZLuDg2mdODXtPzQ==}
@@ -5098,7 +5098,7 @@ snapshots:
       '@nestjs/common': 11.1.17(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2)
       '@nestjs/core': 11.1.17(@nestjs/common@11.1.17(class-transformer@0.5.1)(class-validator@0.14.4)(reflect-metadata@0.2.2)(rxjs@7.8.2))(reflect-metadata@0.2.2)(rxjs@7.8.2)
       fast-querystring: 1.1.2
-      fastify: 5.8.2
+      fastify: 5.8.4
       fastify-plugin: 5.1.0
       find-my-way: 9.5.0
       light-my-request: 6.6.0
@@ -6596,24 +6596,6 @@ snapshots:
   fast-uri@3.1.0: {}
 
   fastify-plugin@5.1.0: {}
-
-  fastify@5.8.2:
-    dependencies:
-      '@fastify/ajv-compiler': 4.0.5
-      '@fastify/error': 4.2.0
-      '@fastify/fast-json-stringify-compiler': 5.0.3
-      '@fastify/proxy-addr': 5.1.0
-      abstract-logging: 2.0.1
-      avvio: 9.2.0
-      fast-json-stringify: 6.3.0
-      find-my-way: 9.5.0
-      light-my-request: 6.6.0
-      pino: 10.3.1
-      process-warning: 5.0.0
-      rfdc: 1.4.1
-      secure-json-parse: 4.1.0
-      semver: 7.7.4
-      toad-cache: 3.7.0
 
   fastify@5.8.4:
     dependencies:

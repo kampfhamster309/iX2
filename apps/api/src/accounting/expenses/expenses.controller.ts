@@ -21,7 +21,7 @@ import { ExpensesService } from './expenses.service';
 import { CreateExpenseDto } from './dto/create-expense.dto';
 import { ExpenseQueryDto } from './dto/expense-query.dto';
 import { PayExpenseDto } from './dto/pay-expense.dto';
-import type { FastifyReply, FastifyRequest } from '@nestjs/platform-fastify/node_modules/fastify';
+import type { FastifyReply, FastifyRequest } from 'fastify';
 
 @ApiTags('accounting')
 @ApiBearerAuth()
