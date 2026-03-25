@@ -77,6 +77,14 @@ const propertyDetailRoute = createRoute({
   component: PropertyDetailPage,
 });
 
+const accountingRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/accounting',
+  beforeLoad: () => {
+    throw redirect({ to: '/accounting/accounts' });
+  },
+});
+
 const accountingAccountsRoute = createRoute({
   getParentRoute: () => rootRoute,
   path: '/accounting/accounts',
@@ -104,6 +112,7 @@ const routeTree = rootRoute.addChildren([
   dashboardRoute,
   propertiesRoute,
   propertyDetailRoute,
+  accountingRoute,
   accountingAccountsRoute,
   accountingAccountDetailRoute,
   accountingJournalEntriesRoute,
