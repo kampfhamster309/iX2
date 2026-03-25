@@ -14,6 +14,9 @@ import { LoginPage } from '@/pages/LoginPage';
 import { DashboardPage } from '@/pages/DashboardPage';
 import { PropertiesPage } from '@/pages/PropertiesPage';
 import { PropertyDetailPage } from '@/pages/PropertyDetailPage';
+import { AccountsPage } from '@/pages/accounting/AccountsPage';
+import { AccountDetailPage } from '@/pages/accounting/AccountDetailPage';
+import { JournalEntriesPage } from '@/pages/accounting/JournalEntriesPage';
 import '@/i18n';
 import '@/index.css';
 
@@ -74,12 +77,36 @@ const propertyDetailRoute = createRoute({
   component: PropertyDetailPage,
 });
 
+const accountingAccountsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/accounting/accounts',
+  beforeLoad: requireAuth,
+  component: AccountsPage,
+});
+
+const accountingAccountDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/accounting/accounts/$accountId',
+  beforeLoad: requireAuth,
+  component: AccountDetailPage,
+});
+
+const accountingJournalEntriesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/accounting/journal-entries',
+  beforeLoad: requireAuth,
+  component: JournalEntriesPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
   dashboardRoute,
   propertiesRoute,
   propertyDetailRoute,
+  accountingAccountsRoute,
+  accountingAccountDetailRoute,
+  accountingJournalEntriesRoute,
 ]);
 
 const router = createRouter({ routeTree });
