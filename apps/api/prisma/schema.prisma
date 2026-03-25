@@ -373,3 +373,59 @@ model Payable {
   @@schema("accounting")
   @@map("payables")
 }
+
+enum DepositStatus {
+  HELD
+  PARTIALLY_RETURNED
+  FULLY_RETURNED
+  FORFEITED
+
+  @@schema("accounting")
+}
+
+model SecurityDeposit {
+  id             String             @id @default(cuid())
+  contractId     String
+  propertyId     String
+  amount         Decimal            @db.Decimal(10, 2)
+  receivedDate   DateTime
+  status         DepositStatus      @default(HELD)
+  journalEntryId String?
+  deductions     DepositDeduction[]
+  refunds        DepositRefund[]
+  createdById    String
+  createdAt      DateTime           @default(now())
+  updatedAt      DateTime           @updatedAt
+
+  @@schema("accounting")
+  @@map("security_deposits")
+}
+
+model DepositDeduction {
+  id             String          @id @default(cuid())
+  depositId      String
+  deposit        SecurityDeposit @relation(fields: [depositId], references: [id], onDelete: Cascade)
+  amount         Decimal         @db.Decimal(10, 2)
+  reason         String
+  accountId      String
+  expenseId      String?
+  journalEntryId String?
+  createdAt      DateTime        @default(now())
+
+  @@schema("accounting")
+  @@map("deposit_deductions")
+}
+
+model DepositRefund {
+  id             String          @id @default(cuid())
+  depositId      String
+  deposit        SecurityDeposit @relation(fields: [depositId], references: [id], onDelete: Cascade)
+  amount         Decimal         @db.Decimal(10, 2)
+  refundDate     DateTime
+  reference      String?
+  journalEntryId String?
+  createdAt      DateTime        @default(now())
+
+  @@schema("accounting")
+  @@map("deposit_refunds")
+}
