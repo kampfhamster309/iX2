@@ -1,12 +1,148 @@
-import { PrismaClient, Role, UnitType, ContractStatus } from '@prisma/client';
+import { PrismaClient, Role, UnitType, ContractStatus, AccountType } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
 const prisma = new PrismaClient();
 
 const BCRYPT_ROUNDS = 10;
 
+async function seedChartOfAccounts() {
+  const accounts = [
+    {
+      code: '1000',
+      name: 'Bank / Cash',
+      nameDe: 'Bank / Kasse',
+      type: AccountType.ASSET,
+      isSystem: true,
+    },
+    {
+      code: '1100',
+      name: 'Rent Receivable',
+      nameDe: 'Mietforderungen',
+      type: AccountType.ASSET,
+      isSystem: true,
+    },
+    {
+      code: '1200',
+      name: 'Security Deposits Held',
+      nameDe: 'Kautionen bei Banken',
+      type: AccountType.ASSET,
+      isSystem: true,
+    },
+    {
+      code: '2000',
+      name: 'Security Deposits Payable',
+      nameDe: 'Kautionsverbindlichkeiten',
+      type: AccountType.LIABILITY,
+      isSystem: true,
+    },
+    {
+      code: '2100',
+      name: 'VAT Payable',
+      nameDe: 'Umsatzsteuerverbindlichkeiten',
+      type: AccountType.LIABILITY,
+      isSystem: true,
+    },
+    {
+      code: '2200',
+      name: 'Accounts Payable',
+      nameDe: 'Verbindlichkeiten aus Lieferungen und Leistungen',
+      type: AccountType.LIABILITY,
+      isSystem: true,
+    },
+    {
+      code: '3000',
+      name: "Owner's Equity",
+      nameDe: 'Eigenkapital',
+      type: AccountType.EQUITY,
+      isSystem: true,
+    },
+    {
+      code: '3100',
+      name: 'Retained Earnings',
+      nameDe: 'Gewinnvortrag',
+      type: AccountType.EQUITY,
+      isSystem: true,
+    },
+    {
+      code: '4000',
+      name: 'Rental Income',
+      nameDe: 'Mieteinnahmen',
+      type: AccountType.INCOME,
+      isSystem: true,
+    },
+    {
+      code: '4100',
+      name: 'Late Fee Income',
+      nameDe: 'Mahngebühren',
+      type: AccountType.INCOME,
+      isSystem: true,
+    },
+    {
+      code: '4200',
+      name: 'Other Income',
+      nameDe: 'Sonstige Einnahmen',
+      type: AccountType.INCOME,
+      isSystem: false,
+    },
+    {
+      code: '6000',
+      name: 'Maintenance & Repairs',
+      nameDe: 'Instandhaltung und Reparaturen',
+      type: AccountType.EXPENSE,
+      isSystem: true,
+    },
+    {
+      code: '6100',
+      name: 'Property Insurance',
+      nameDe: 'Gebäudeversicherung',
+      type: AccountType.EXPENSE,
+      isSystem: true,
+    },
+    {
+      code: '6200',
+      name: 'Property Management Fees',
+      nameDe: 'Hausverwaltungsgebühren',
+      type: AccountType.EXPENSE,
+      isSystem: true,
+    },
+    {
+      code: '6300',
+      name: 'Utilities',
+      nameDe: 'Betriebskosten',
+      type: AccountType.EXPENSE,
+      isSystem: true,
+    },
+    {
+      code: '6400',
+      name: 'Depreciation',
+      nameDe: 'Abschreibungen',
+      type: AccountType.EXPENSE,
+      isSystem: true,
+    },
+    {
+      code: '6500',
+      name: 'Other Expenses',
+      nameDe: 'Sonstige Aufwendungen',
+      type: AccountType.EXPENSE,
+      isSystem: false,
+    },
+  ];
+
+  for (const account of accounts) {
+    await prisma.account.upsert({
+      where: { code: account.code },
+      update: {},
+      create: account,
+    });
+  }
+
+  console.log(`Seeded ${accounts.length} chart of accounts entries`);
+}
+
 async function main() {
   console.log('Seeding database...');
+
+  await seedChartOfAccounts();
 
   // --- Users ---
   const adminPasswordHash = await bcrypt.hash('Admin1234!', BCRYPT_ROUNDS);
