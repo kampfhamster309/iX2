@@ -51,6 +51,16 @@ enum ContractStatus {
   @@schema("public")
 }
 
+enum ContractType {
+  RESIDENTIAL_LEASE
+  COMMERCIAL_LEASE
+  PARKING
+  STORAGE
+  OTHER
+
+  @@schema("public")
+}
+
 model User {
   id                String            @id @default(cuid())
   email             String            @unique
@@ -98,22 +108,38 @@ model Owner {
 }
 
 model Property {
-  id          String            @id @default(cuid())
-  name        String
-  address     String
-  city        String
-  postalCode  String
-  country     String            @default("DE")
-  status      PropertyStatus    @default(ACTIVE)
-  ownerId     String
-  owner       Owner             @relation(fields: [ownerId], references: [id])
-  units       Unit[]
-  managers    PropertyManager[]
-  createdAt   DateTime          @default(now())
-  updatedAt   DateTime          @updatedAt
+  id             String            @id @default(cuid())
+  name           String
+  address        String
+  city           String
+  postalCode     String
+  country        String            @default("DE")
+  status         PropertyStatus    @default(ACTIVE)
+  ownerId        String
+  owner          Owner             @relation(fields: [ownerId], references: [id])
+  units          Unit[]
+  managers       PropertyManager[]
+  yearBuilt      Int?
+  numberOfFloors Int?
+  description    String?
+  notes          PropertyNote[]
+  createdAt      DateTime          @default(now())
+  updatedAt      DateTime          @updatedAt
 
   @@schema("public")
   @@map("properties")
+}
+
+model PropertyNote {
+  id          String   @id @default(cuid())
+  propertyId  String
+  property    Property @relation(fields: [propertyId], references: [id], onDelete: Cascade)
+  content     String
+  createdById String
+  createdAt   DateTime @default(now())
+
+  @@schema("public")
+  @@map("property_notes")
 }
 
 model PropertyManager {
@@ -148,18 +174,23 @@ model Unit {
 }
 
 model Tenant {
-  id          String     @id @default(cuid())
-  firstName   String
-  lastName    String
-  email       String?
-  phone       String?
-  dateOfBirth DateTime?
-  address     String?
-  userId      String?    @unique
-  user        User?      @relation(fields: [userId], references: [id])
-  contracts   Contract[]
-  createdAt   DateTime   @default(now())
-  updatedAt   DateTime   @updatedAt
+  id                       String     @id @default(cuid())
+  firstName                String
+  lastName                 String
+  email                    String?
+  phone                    String?
+  dateOfBirth              DateTime?
+  address                  String?
+  isCompany                Boolean    @default(false)
+  companyName              String?
+  legalForm                String?
+  taxId                    String?
+  commercialRegisterNumber String?
+  userId                   String?    @unique
+  user                     User?      @relation(fields: [userId], references: [id])
+  contracts                Contract[]
+  createdAt                DateTime   @default(now())
+  updatedAt                DateTime   @updatedAt
 
   @@schema("public")
   @@map("tenants")
@@ -176,6 +207,7 @@ model Contract {
   rentAmount    Decimal        @db.Decimal(10, 2)
   depositAmount Decimal?       @db.Decimal(10, 2)
   status        ContractStatus @default(ACTIVE)
+  type          ContractType
   notes         String?
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
