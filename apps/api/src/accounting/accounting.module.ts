@@ -3,10 +3,12 @@ import { AccountsController } from './accounts/accounts.controller';
 import { AccountsService } from './accounts/accounts.service';
 import { JournalController } from './journal/journal.controller';
 import { JournalService } from './journal/journal.service';
+import { InvoicesController } from './invoices/invoices.controller';
+import { InvoicesService } from './invoices/invoices.service';
 
 @Module({
-  controllers: [AccountsController, JournalController],
-  providers: [AccountsService, JournalService],
+  controllers: [AccountsController, JournalController, InvoicesController],
+  providers: [AccountsService, JournalService, InvoicesService],
   exports: [AccountsService, JournalService],
 })
 export class AccountingModule {}
