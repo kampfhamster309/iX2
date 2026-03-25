@@ -1,10 +1,12 @@
 generator client {
-  provider = "prisma-client-js"
+  provider        = "prisma-client-js"
+  previewFeatures = ["multiSchema"]
 }
 
 datasource db {
   provider = "postgresql"
   url      = env("DATABASE_URL")
+  schemas  = ["public", "accounting"]
 }
 
 enum Role {
@@ -13,6 +15,8 @@ enum Role {
   ACCOUNTANT
   MAINTENANCE
   TENANT
+
+  @@schema("public")
 }
 
 enum UnitType {
@@ -20,23 +24,31 @@ enum UnitType {
   COMMERCIAL
   PARKING
   STORAGE
+
+  @@schema("public")
 }
 
 enum UnitStatus {
   VACANT
   OCCUPIED
   MAINTENANCE
+
+  @@schema("public")
 }
 
 enum PropertyStatus {
   ACTIVE
   INACTIVE
+
+  @@schema("public")
 }
 
 enum ContractStatus {
   ACTIVE
   EXPIRED
   TERMINATED
+
+  @@schema("public")
 }
 
 model User {
@@ -51,6 +63,7 @@ model User {
   tenantProfile     Tenant?
   managedProperties PropertyManager[]
 
+  @@schema("public")
   @@map("users")
 }
 
@@ -64,6 +77,7 @@ model RefreshToken {
   revokedAt DateTime?
   createdAt DateTime  @default(now())
 
+  @@schema("public")
   @@map("refresh_tokens")
 }
 
@@ -79,6 +93,7 @@ model Owner {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 
+  @@schema("public")
   @@map("owners")
 }
 
@@ -97,6 +112,7 @@ model Property {
   createdAt   DateTime          @default(now())
   updatedAt   DateTime          @updatedAt
 
+  @@schema("public")
   @@map("properties")
 }
 
@@ -109,6 +125,7 @@ model PropertyManager {
   assignedAt DateTime @default(now())
 
   @@unique([propertyId, userId])
+  @@schema("public")
   @@map("property_managers")
 }
 
@@ -126,6 +143,7 @@ model Unit {
   createdAt  DateTime   @default(now())
   updatedAt  DateTime   @updatedAt
 
+  @@schema("public")
   @@map("units")
 }
 
@@ -143,6 +161,7 @@ model Tenant {
   createdAt   DateTime   @default(now())
   updatedAt   DateTime   @updatedAt
 
+  @@schema("public")
   @@map("tenants")
 }
 
@@ -161,5 +180,65 @@ model Contract {
   createdAt     DateTime       @default(now())
   updatedAt     DateTime       @updatedAt
 
+  @@schema("public")
   @@map("contracts")
+}
+
+// ─── Accounting Schema ─────────────────────────────────────────────────────────
+
+enum AccountType {
+  ASSET
+  LIABILITY
+  EQUITY
+  INCOME
+  EXPENSE
+
+  @@schema("accounting")
+}
+
+model Account {
+  id           String        @id @default(cuid())
+  code         String        @unique
+  name         String
+  nameDe       String
+  type         AccountType
+  parentId     String?
+  parent       Account?      @relation("AccountHierarchy", fields: [parentId], references: [id])
+  children     Account[]     @relation("AccountHierarchy")
+  isSystem     Boolean       @default(false)
+  description  String?
+  journalLines JournalLine[]
+  createdAt    DateTime      @default(now())
+  updatedAt    DateTime      @updatedAt
+
+  @@schema("accounting")
+  @@map("accounts")
+}
+
+model JournalEntry {
+  id          String        @id @default(cuid())
+  date        DateTime
+  description String
+  reference   String?
+  propertyId  String?
+  createdById String
+  lines       JournalLine[]
+  createdAt   DateTime      @default(now())
+
+  @@schema("accounting")
+  @@map("journal_entries")
+}
+
+model JournalLine {
+  id             String       @id @default(cuid())
+  journalEntryId String
+  journalEntry   JournalEntry @relation(fields: [journalEntryId], references: [id], onDelete: Cascade)
+  accountId      String
+  account        Account      @relation(fields: [accountId], references: [id])
+  debit          Decimal      @default(0) @db.Decimal(15, 2)
+  credit         Decimal      @default(0) @db.Decimal(15, 2)
+  description    String?
+
+  @@schema("accounting")
+  @@map("journal_lines")
 }
