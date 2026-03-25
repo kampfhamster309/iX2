@@ -17,6 +17,8 @@ import { PropertyDetailPage } from '@/pages/PropertyDetailPage';
 import { AccountsPage } from '@/pages/accounting/AccountsPage';
 import { AccountDetailPage } from '@/pages/accounting/AccountDetailPage';
 import { JournalEntriesPage } from '@/pages/accounting/JournalEntriesPage';
+import { InvoicesPage } from '@/pages/accounting/InvoicesPage';
+import { InvoiceDetailPage } from '@/pages/accounting/InvoiceDetailPage';
 import '@/i18n';
 import '@/index.css';
 
@@ -106,6 +108,20 @@ const accountingJournalEntriesRoute = createRoute({
   component: JournalEntriesPage,
 });
 
+const accountingInvoicesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/accounting/invoices',
+  beforeLoad: requireAuth,
+  component: InvoicesPage,
+});
+
+const accountingInvoiceDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/accounting/invoices/$invoiceId',
+  beforeLoad: requireAuth,
+  component: InvoiceDetailPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -116,6 +132,8 @@ const routeTree = rootRoute.addChildren([
   accountingAccountsRoute,
   accountingAccountDetailRoute,
   accountingJournalEntriesRoute,
+  accountingInvoicesRoute,
+  accountingInvoiceDetailRoute,
 ]);
 
 const router = createRouter({ routeTree });

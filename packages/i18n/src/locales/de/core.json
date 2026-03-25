@@ -10,6 +10,9 @@
     "tenants": "Mieter",
     "contracts": "Verträge",
     "accounting": "Buchhaltung",
+    "accounts": "Kontenplan",
+    "invoicesNav": "Rechnungen",
+    "journalEntries": "Buchungsjournal",
     "maintenance": "Instandhaltung",
     "settings": "Einstellungen"
   },
@@ -37,6 +40,49 @@
   },
   "properties": {
     "empty": "Keine Immobilien gefunden."
+  },
+  "invoices": {
+    "title": "Rechnungen",
+    "generate": "Rechnungen erstellen",
+    "markOverdue": "Überfällig markieren",
+    "markOverdueConfirm": "Alle überfälligen ausgestellten Rechnungen als überfällig markieren?",
+    "markOverdueDone": "{{updated}} Rechnung(en) als überfällig markiert.",
+    "generated": "{{created}} Rechnung(en) erstellt, {{skipped}} übersprungen.",
+    "period": "Zeitraum",
+    "amountDue": "Betrag",
+    "amountPaid": "Bezahlt",
+    "outstanding": "Offen",
+    "dueDate": "Fälligkeitsdatum",
+    "issuedAt": "Ausgestellt am",
+    "filterStatus": "Alle Status",
+    "filterProperty": "Alle Immobilien",
+    "noInvoices": "Keine Rechnungen gefunden.",
+    "issue": "Ausstellen",
+    "recordPayment": "Zahlung erfassen",
+    "paymentAmount": "Betrag",
+    "paymentDate": "Zahlungsdatum",
+    "paymentMethod": "Zahlungsart",
+    "paymentReference": "Referenz (optional)",
+    "overpaymentError": "Betrag darf den offenen Saldo von {{balance}} nicht überschreiten.",
+    "month": "Monat",
+    "year": "Jahr",
+    "paymentHistory": "Zahlungshistorie",
+    "contract": "Vertrag",
+    "noPayments": "Noch keine Zahlungen erfasst.",
+    "statuses": {
+      "DRAFT": "Entwurf",
+      "ISSUED": "Ausgestellt",
+      "PAID": "Bezahlt",
+      "PARTIALLY_PAID": "Teilbezahlt",
+      "OVERDUE": "Überfällig",
+      "CANCELLED": "Storniert"
+    },
+    "methods": {
+      "BANK_TRANSFER": "Überweisung",
+      "CASH": "Bar",
+      "DIRECT_DEBIT": "Lastschrift",
+      "OTHER": "Sonstige"
+    }
   },
   "accounting": {
     "accountsTitle": "Kontenplan",

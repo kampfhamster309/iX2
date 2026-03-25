@@ -9,8 +9,14 @@ const NAV_ITEMS = [
   { key: 'nav.properties', path: '/properties', icon: '🏢' },
   { key: 'nav.tenants', path: '/tenants', icon: '👥' },
   { key: 'nav.contracts', path: '/contracts', icon: '📄' },
-  { key: 'nav.accounting', path: '/accounting', icon: '💰' },
+  { key: 'nav.accounting', path: '/accounting/accounts', icon: '💰' },
   { key: 'nav.maintenance', path: '/maintenance', icon: '🔧' },
+];
+
+const ACCOUNTING_SUB_ITEMS = [
+  { key: 'nav.accounts', path: '/accounting/accounts' },
+  { key: 'nav.invoicesNav', path: '/accounting/invoices' },
+  { key: 'nav.journalEntries', path: '/accounting/journal-entries' },
 ];
 
 export function Sidebar() {
@@ -26,14 +32,28 @@ export function Sidebar() {
 
       <nav className="flex-1 p-3 space-y-1">
         {NAV_ITEMS.map((item) => (
-          <Link
-            key={item.path}
-            to={item.path}
-            className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors [&.active]:bg-primary-700 [&.active]:text-white"
-          >
-            <span>{item.icon}</span>
-            <span>{t(item.key)}</span>
-          </Link>
+          <div key={item.path}>
+            <Link
+              to={item.path}
+              className="flex items-center gap-3 px-3 py-2 rounded-md text-sm text-gray-300 hover:bg-gray-700 hover:text-white transition-colors [&.active]:bg-primary-700 [&.active]:text-white"
+            >
+              <span>{item.icon}</span>
+              <span>{t(item.key)}</span>
+            </Link>
+            {item.path === '/accounting/accounts' && (
+              <div className="ml-6 mt-0.5 space-y-0.5">
+                {ACCOUNTING_SUB_ITEMS.map((sub) => (
+                  <Link
+                    key={sub.path}
+                    to={sub.path}
+                    className="flex items-center px-3 py-1.5 rounded-md text-xs text-gray-400 hover:bg-gray-700 hover:text-white transition-colors [&.active]:text-white [&.active]:font-medium"
+                  >
+                    {t(sub.key)}
+                  </Link>
+                ))}
+              </div>
+            )}
+          </div>
         ))}
       </nav>
 

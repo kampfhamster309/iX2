@@ -10,6 +10,9 @@
     "tenants": "Tenants",
     "contracts": "Contracts",
     "accounting": "Accounting",
+    "accounts": "Accounts",
+    "invoicesNav": "Invoices",
+    "journalEntries": "Journal Entries",
     "maintenance": "Maintenance",
     "settings": "Settings"
   },
@@ -37,6 +40,49 @@
   },
   "properties": {
     "empty": "No properties found."
+  },
+  "invoices": {
+    "title": "Invoices",
+    "generate": "Generate Invoices",
+    "markOverdue": "Mark Overdue",
+    "markOverdueConfirm": "Mark all past-due issued invoices as overdue?",
+    "markOverdueDone": "{{updated}} invoice(s) marked as overdue.",
+    "generated": "{{created}} invoice(s) created, {{skipped}} skipped.",
+    "period": "Period",
+    "amountDue": "Amount Due",
+    "amountPaid": "Paid",
+    "outstanding": "Outstanding",
+    "dueDate": "Due Date",
+    "issuedAt": "Issued At",
+    "filterStatus": "All statuses",
+    "filterProperty": "All properties",
+    "noInvoices": "No invoices found.",
+    "issue": "Issue",
+    "recordPayment": "Record Payment",
+    "paymentAmount": "Amount",
+    "paymentDate": "Payment Date",
+    "paymentMethod": "Method",
+    "paymentReference": "Reference (optional)",
+    "overpaymentError": "Amount cannot exceed outstanding balance of {{balance}}.",
+    "month": "Month",
+    "year": "Year",
+    "paymentHistory": "Payment History",
+    "contract": "Contract",
+    "noPayments": "No payments recorded yet.",
+    "statuses": {
+      "DRAFT": "Draft",
+      "ISSUED": "Issued",
+      "PAID": "Paid",
+      "PARTIALLY_PAID": "Partial",
+      "OVERDUE": "Overdue",
+      "CANCELLED": "Cancelled"
+    },
+    "methods": {
+      "BANK_TRANSFER": "Bank Transfer",
+      "CASH": "Cash",
+      "DIRECT_DEBIT": "Direct Debit",
+      "OTHER": "Other"
+    }
   },
   "accounting": {
     "accountsTitle": "Chart of Accounts",
