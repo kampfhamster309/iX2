@@ -13,6 +13,7 @@
     "accounts": "Accounts",
     "invoicesNav": "Invoices",
     "journalEntries": "Journal Entries",
+    "expenses": "Expenses",
     "maintenance": "Maintenance",
     "settings": "Settings"
   },
@@ -83,6 +84,33 @@
       "DIRECT_DEBIT": "Direct Debit",
       "OTHER": "Other"
     }
+  },
+  "expenses": {
+    "title": "Expenses",
+    "createExpense": "New Expense",
+    "property": "Property",
+    "selectProperty": "Select property...",
+    "account": "Expense Account",
+    "selectAccount": "Select account...",
+    "amount": "Amount",
+    "date": "Date",
+    "vendor": "Vendor",
+    "description": "Description",
+    "paidImmediately": "Paid immediately",
+    "dueDate": "Due Date",
+    "receipt": "Receipt (optional)",
+    "required": "This field is required",
+    "allStatuses": "All statuses",
+    "paid": "Paid",
+    "unpaid": "Unpaid",
+    "status": "Status",
+    "noExpenses": "No expenses found.",
+    "pendingPayables": "Pending Payables",
+    "unpaidItems": "unpaid item(s)",
+    "payableStatus": "Payable status",
+    "viewReceipt": "View receipt",
+    "markPaid": "Mark as Paid",
+    "confirmPayment": "Confirm Payment"
   },
   "accounting": {
     "accountsTitle": "Chart of Accounts",

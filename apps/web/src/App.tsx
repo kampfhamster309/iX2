@@ -19,6 +19,8 @@ import { AccountDetailPage } from '@/pages/accounting/AccountDetailPage';
 import { JournalEntriesPage } from '@/pages/accounting/JournalEntriesPage';
 import { InvoicesPage } from '@/pages/accounting/InvoicesPage';
 import { InvoiceDetailPage } from '@/pages/accounting/InvoiceDetailPage';
+import { ExpensesPage } from '@/pages/accounting/ExpensesPage';
+import { ExpenseDetailPage } from '@/pages/accounting/ExpenseDetailPage';
 import '@/i18n';
 import '@/index.css';
 
@@ -122,6 +124,20 @@ const accountingInvoiceDetailRoute = createRoute({
   component: InvoiceDetailPage,
 });
 
+const accountingExpensesRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/accounting/expenses',
+  beforeLoad: requireAuth,
+  component: ExpensesPage,
+});
+
+const accountingExpenseDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/accounting/expenses/$expenseId',
+  beforeLoad: requireAuth,
+  component: ExpenseDetailPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -134,6 +150,8 @@ const routeTree = rootRoute.addChildren([
   accountingJournalEntriesRoute,
   accountingInvoicesRoute,
   accountingInvoiceDetailRoute,
+  accountingExpensesRoute,
+  accountingExpenseDetailRoute,
 ]);
 
 const router = createRouter({ routeTree });

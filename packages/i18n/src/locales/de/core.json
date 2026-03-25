@@ -13,6 +13,7 @@
     "accounts": "Kontenplan",
     "invoicesNav": "Rechnungen",
     "journalEntries": "Buchungsjournal",
+    "expenses": "Ausgaben",
     "maintenance": "Instandhaltung",
     "settings": "Einstellungen"
   },
@@ -83,6 +84,33 @@
       "DIRECT_DEBIT": "Lastschrift",
       "OTHER": "Sonstige"
     }
+  },
+  "expenses": {
+    "title": "Ausgaben",
+    "createExpense": "Neue Ausgabe",
+    "property": "Immobilie",
+    "selectProperty": "Immobilie auswählen...",
+    "account": "Aufwandskonto",
+    "selectAccount": "Konto auswählen...",
+    "amount": "Betrag",
+    "date": "Datum",
+    "vendor": "Lieferant",
+    "description": "Beschreibung",
+    "paidImmediately": "Sofort bezahlt",
+    "dueDate": "Fälligkeitsdatum",
+    "receipt": "Beleg (optional)",
+    "required": "Dieses Feld ist erforderlich",
+    "allStatuses": "Alle Status",
+    "paid": "Bezahlt",
+    "unpaid": "Offen",
+    "status": "Status",
+    "noExpenses": "Keine Ausgaben gefunden.",
+    "pendingPayables": "Offene Verbindlichkeiten",
+    "unpaidItems": "offene Position(en)",
+    "payableStatus": "Verbindlichkeit Status",
+    "viewReceipt": "Beleg anzeigen",
+    "markPaid": "Als bezahlt markieren",
+    "confirmPayment": "Zahlung bestätigen"
   },
   "accounting": {
     "accountsTitle": "Kontenplan",
