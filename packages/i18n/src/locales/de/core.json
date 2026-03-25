@@ -14,6 +14,7 @@
     "invoicesNav": "Rechnungen",
     "journalEntries": "Buchungsjournal",
     "expenses": "Ausgaben",
+    "deposits": "Kautionen",
     "maintenance": "Instandhaltung",
     "settings": "Einstellungen"
   },
@@ -83,6 +84,38 @@
       "CASH": "Bar",
       "DIRECT_DEBIT": "Lastschrift",
       "OTHER": "Sonstige"
+    }
+  },
+  "deposits": {
+    "title": "Kautionen",
+    "depositTitle": "Kaution",
+    "contract": "Vertrag",
+    "receivedDate": "Eingangsdatum",
+    "amount": "Betrag",
+    "remaining": "Verbleibend",
+    "returned": "Erstattet",
+    "allStatuses": "Alle Status",
+    "noDeposits": "Keine Kautionen gefunden.",
+    "addDeduction": "Abzug hinzufügen",
+    "recordRefund": "Rückzahlung erfassen",
+    "reason": "Grund",
+    "creditAccount": "Habenkonto",
+    "selectAccount": "Konto auswählen...",
+    "expenseRef": "Ausgabereferenz (optional)",
+    "expenseRefPlaceholder": "Ausgaben-ID...",
+    "refundDate": "Rückzahlungsdatum",
+    "reference": "Referenz",
+    "deductions": "Abzüge",
+    "noDeductions": "Keine Abzüge erfasst.",
+    "refunds": "Rückzahlungen",
+    "noRefunds": "Keine Rückzahlungen erfasst.",
+    "exceedsBalance": "Betrag darf den verbleibenden Saldo von {{balance}} nicht überschreiten.",
+    "required": "Dieses Feld ist erforderlich",
+    "statuses": {
+      "HELD": "Einbehalten",
+      "PARTIALLY_RETURNED": "Teilweise erstattet",
+      "FULLY_RETURNED": "Vollständig erstattet",
+      "FORFEITED": "Einbehalten (verfallen)"
     }
   },
   "expenses": {

@@ -14,6 +14,7 @@
     "invoicesNav": "Invoices",
     "journalEntries": "Journal Entries",
     "expenses": "Expenses",
+    "deposits": "Deposits",
     "maintenance": "Maintenance",
     "settings": "Settings"
   },
@@ -83,6 +84,38 @@
       "CASH": "Cash",
       "DIRECT_DEBIT": "Direct Debit",
       "OTHER": "Other"
+    }
+  },
+  "deposits": {
+    "title": "Security Deposits",
+    "depositTitle": "Security Deposit",
+    "contract": "Contract",
+    "receivedDate": "Received Date",
+    "amount": "Amount",
+    "remaining": "Remaining",
+    "returned": "Returned",
+    "allStatuses": "All statuses",
+    "noDeposits": "No deposits found.",
+    "addDeduction": "Add Deduction",
+    "recordRefund": "Record Refund",
+    "reason": "Reason",
+    "creditAccount": "Credit Account",
+    "selectAccount": "Select account...",
+    "expenseRef": "Expense reference (optional)",
+    "expenseRefPlaceholder": "Expense ID...",
+    "refundDate": "Refund Date",
+    "reference": "Reference",
+    "deductions": "Deductions",
+    "noDeductions": "No deductions recorded.",
+    "refunds": "Refunds",
+    "noRefunds": "No refunds recorded.",
+    "exceedsBalance": "Amount cannot exceed remaining balance of {{balance}}.",
+    "required": "This field is required",
+    "statuses": {
+      "HELD": "Held",
+      "PARTIALLY_RETURNED": "Partial Return",
+      "FULLY_RETURNED": "Fully Returned",
+      "FORFEITED": "Forfeited"
     }
   },
   "expenses": {

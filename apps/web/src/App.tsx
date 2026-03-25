@@ -21,6 +21,8 @@ import { InvoicesPage } from '@/pages/accounting/InvoicesPage';
 import { InvoiceDetailPage } from '@/pages/accounting/InvoiceDetailPage';
 import { ExpensesPage } from '@/pages/accounting/ExpensesPage';
 import { ExpenseDetailPage } from '@/pages/accounting/ExpenseDetailPage';
+import { DepositsPage } from '@/pages/accounting/DepositsPage';
+import { DepositDetailPage } from '@/pages/accounting/DepositDetailPage';
 import '@/i18n';
 import '@/index.css';
 
@@ -138,6 +140,20 @@ const accountingExpenseDetailRoute = createRoute({
   component: ExpenseDetailPage,
 });
 
+const accountingDepositsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/accounting/deposits',
+  beforeLoad: requireAuth,
+  component: DepositsPage,
+});
+
+const accountingDepositDetailRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/accounting/deposits/$depositId',
+  beforeLoad: requireAuth,
+  component: DepositDetailPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -152,6 +168,8 @@ const routeTree = rootRoute.addChildren([
   accountingInvoiceDetailRoute,
   accountingExpensesRoute,
   accountingExpenseDetailRoute,
+  accountingDepositsRoute,
+  accountingDepositDetailRoute,
 ]);
 
 const router = createRouter({ routeTree });
