@@ -9,6 +9,8 @@ import { ExpensesController } from './expenses/expenses.controller';
 import { ExpensesService } from './expenses/expenses.service';
 import { DepositsController } from './deposits/deposits.controller';
 import { DepositsService } from './deposits/deposits.service';
+import { ReportsController } from './reports/reports.controller';
+import { ReportsService } from './reports/reports.service';
 
 @Module({
   controllers: [
@@ -17,8 +19,16 @@ import { DepositsService } from './deposits/deposits.service';
     InvoicesController,
     ExpensesController,
     DepositsController,
+    ReportsController,
   ],
-  providers: [AccountsService, JournalService, InvoicesService, ExpensesService, DepositsService],
+  providers: [
+    AccountsService,
+    JournalService,
+    InvoicesService,
+    ExpensesService,
+    DepositsService,
+    ReportsService,
+  ],
   exports: [AccountsService, JournalService],
 })
 export class AccountingModule {}

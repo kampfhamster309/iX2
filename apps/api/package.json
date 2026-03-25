@@ -30,8 +30,10 @@
     "class-transformer": "^0.5.0",
     "class-validator": "^0.14.0",
     "decimal.js": "^10.6.0",
+    "fastify": "^5.8.4",
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.0",
+    "pdfkit": "^0.18.0",
     "reflect-metadata": "^0.2.0",
     "rxjs": "^7.8.0"
   },
@@ -46,6 +48,7 @@
     "@types/bcrypt": "^5.0.0",
     "@types/node": "^22.0.0",
     "@types/passport-jwt": "^4.0.0",
+    "@types/pdfkit": "^0.17.5",
     "@types/supertest": "^6.0.0",
     "@vitest/coverage-v8": "^3.0.0",
     "dotenv": "^16.0.0",
