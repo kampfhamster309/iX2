@@ -61,6 +61,51 @@ enum ContractType {
   @@schema("public")
 }
 
+enum Currency {
+  EUR
+  USD
+  GBP
+  CHF
+
+  @@schema("public")
+}
+
+enum AppLanguage {
+  en
+  de
+
+  @@schema("public")
+}
+
+model SystemConfig {
+  id              Int         @id @default(1)
+  currency        Currency    @default(EUR)
+  defaultLanguage AppLanguage @default(en)
+  updatedAt       DateTime    @updatedAt
+
+  @@schema("public")
+  @@map("system_config")
+}
+
+model CompanyProfile {
+  id         Int      @id @default(1)
+  name       String   @default("")
+  legalType  String   @default("")
+  street     String   @default("")
+  city       String   @default("")
+  postalCode String   @default("")
+  country    String   @default("")
+  taxId      String   @default("")
+  vatId      String   @default("")
+  phone      String   @default("")
+  email      String   @default("")
+  logoPath   String?
+  updatedAt  DateTime @updatedAt
+
+  @@schema("public")
+  @@map("company_profile")
+}
+
 model User {
   id                String            @id @default(cuid())
   email             String            @unique

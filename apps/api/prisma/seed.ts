@@ -5,6 +5,8 @@ import {
   ContractStatus,
   ContractType,
   AccountType,
+  Currency,
+  AppLanguage,
 } from '@prisma/client';
 import * as bcrypt from 'bcrypt';
 
@@ -462,6 +464,20 @@ async function main() {
   void berlinAptB;
 
   console.log('Created 3 contracts, set 3 units as OCCUPIED');
+  // Seed default system config and company profile (idempotent)
+  await prisma.systemConfig.upsert({
+    where: { id: 1 },
+    update: {},
+    create: { id: 1, currency: Currency.EUR, defaultLanguage: AppLanguage.en },
+  });
+
+  await prisma.companyProfile.upsert({
+    where: { id: 1 },
+    update: {},
+    create: { id: 1 },
+  });
+
+  console.log('Seeded default system config and company profile');
   console.log('Seed complete!');
   console.log('');
   console.log('Test credentials:');
