@@ -1,4 +1,5 @@
-import { IsString, IsOptional, IsEmail, IsDateString } from 'class-validator';
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsString, IsOptional, IsEmail, IsDateString, IsBoolean } from 'class-validator';
 
 export class CreateTenantDto {
   @IsString()
@@ -22,4 +23,29 @@ export class CreateTenantDto {
   @IsOptional()
   @IsString()
   address?: string;
+
+  @ApiPropertyOptional({ default: false })
+  @IsOptional()
+  @IsBoolean()
+  isCompany?: boolean;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  companyName?: string;
+
+  @ApiPropertyOptional({ description: 'e.g. GmbH, AG, GbR, Einzelunternehmen' })
+  @IsOptional()
+  @IsString()
+  legalForm?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  taxId?: string;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  commercialRegisterNumber?: string;
 }

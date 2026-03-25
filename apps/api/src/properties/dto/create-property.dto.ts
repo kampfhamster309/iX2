@@ -1,5 +1,5 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsOptional, IsEnum } from 'class-validator';
+import { IsString, IsOptional, IsEnum, IsInt, Min } from 'class-validator';
 import { PropertyStatus } from '@prisma/client';
 
 export class CreatePropertyDto {
@@ -32,4 +32,21 @@ export class CreatePropertyDto {
   @IsOptional()
   @IsEnum(PropertyStatus)
   status?: PropertyStatus;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsInt()
+  @Min(1800)
+  yearBuilt?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsInt()
+  @Min(1)
+  numberOfFloors?: number;
+
+  @ApiPropertyOptional()
+  @IsOptional()
+  @IsString()
+  description?: string;
 }

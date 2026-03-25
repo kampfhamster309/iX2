@@ -8,7 +8,7 @@ import { PrismaService } from '../prisma/prisma.service';
 import { PropertiesService } from '../properties/properties.service';
 import { CreateContractDto } from './dto/create-contract.dto';
 import { UpdateContractDto } from './dto/update-contract.dto';
-import { ContractStatus, Role } from '@prisma/client';
+import { ContractStatus, ContractType, Role } from '@prisma/client';
 import { JwtPayload } from '../auth/interfaces/jwt-payload.interface';
 
 export interface ContractQueryDto {
@@ -122,6 +122,7 @@ export class ContractsService {
           rentAmount: dto.rentAmount,
           depositAmount: dto.depositAmount ?? null,
           status: ContractStatus.ACTIVE,
+          type: dto.type ?? ContractType.RESIDENTIAL_LEASE,
           notes: dto.notes,
         },
         include: { unit: true, tenant: true },

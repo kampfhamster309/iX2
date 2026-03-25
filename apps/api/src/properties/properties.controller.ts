@@ -11,11 +11,12 @@ import {
   HttpCode,
   HttpStatus,
 } from '@nestjs/common';
-import { ApiTags, ApiBearerAuth } from '@nestjs/swagger';
+import { ApiTags, ApiBearerAuth, ApiOperation } from '@nestjs/swagger';
 import { PropertiesService } from './properties.service';
 import { CreatePropertyDto } from './dto/create-property.dto';
 import { UpdatePropertyDto } from './dto/update-property.dto';
 import { PropertyQueryDto } from './dto/property-query.dto';
+import { CreatePropertyNoteDto } from './dto/create-property-note.dto';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
@@ -67,5 +68,26 @@ export class PropertiesController {
     @CurrentUser() user: JwtPayload,
   ) {
     return this.propertiesService.assignManager(propertyId, body.userId, user);
+  }
+
+  @Post(':id/notes')
+  @Roles(Role.ADMIN, Role.MANAGER)
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Add a note to a property' })
+  addNote(
+    @Param('id') id: string,
+    @Body() dto: CreatePropertyNoteDto,
+    @CurrentUser() user: JwtPayload,
+  ) {
+    // request.user is the full User from JwtStrategy.validate(); it has .id at runtime
+    const userId: string = (user as unknown as { id: string }).id ?? user.sub;
+    return this.propertiesService.addNote(id, dto.content, userId, user);
+  }
+
+  @Get(':id/notes')
+  @ApiBearerAuth()
+  @ApiOperation({ summary: 'Get all notes for a property' })
+  getNotes(@Param('id') id: string, @CurrentUser() user: JwtPayload) {
+    return this.propertiesService.getNotes(id, user);
   }
 }

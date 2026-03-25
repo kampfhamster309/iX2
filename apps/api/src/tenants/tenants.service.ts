@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
 import { PrismaService } from '../prisma/prisma.service';
 import { CreateTenantDto } from './dto/create-tenant.dto';
 import { UpdateTenantDto } from './dto/update-tenant.dto';
@@ -51,6 +51,10 @@ export class TenantsService {
   }
 
   async create(dto: CreateTenantDto, _user: JwtPayload) {
+    if (dto.isCompany && !dto.companyName) {
+      throw new BadRequestException('companyName is required for company tenants');
+    }
+
     return this.prisma.tenant.create({
       data: {
         firstName: dto.firstName,
@@ -59,6 +63,11 @@ export class TenantsService {
         phone: dto.phone,
         dateOfBirth: dto.dateOfBirth ? new Date(dto.dateOfBirth) : undefined,
         address: dto.address,
+        isCompany: dto.isCompany ?? false,
+        companyName: dto.companyName,
+        legalForm: dto.legalForm,
+        taxId: dto.taxId,
+        commercialRegisterNumber: dto.commercialRegisterNumber,
       },
     });
   }

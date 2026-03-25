@@ -72,6 +72,9 @@ export class PropertiesService {
         country: dto.country ?? 'DE',
         ownerId: dto.ownerId,
         status: dto.status,
+        yearBuilt: dto.yearBuilt,
+        numberOfFloors: dto.numberOfFloors,
+        description: dto.description,
       },
       include: { owner: true },
     });
@@ -104,6 +107,9 @@ export class PropertiesService {
         ...(dto.country !== undefined ? { country: dto.country } : {}),
         ...(dto.status !== undefined ? { status: dto.status } : {}),
         ...(dto.ownerId !== undefined ? { ownerId: dto.ownerId } : {}),
+        ...(dto.yearBuilt !== undefined ? { yearBuilt: dto.yearBuilt } : {}),
+        ...(dto.numberOfFloors !== undefined ? { numberOfFloors: dto.numberOfFloors } : {}),
+        ...(dto.description !== undefined ? { description: dto.description } : {}),
       },
       include: { owner: true },
     });
@@ -116,6 +122,21 @@ export class PropertiesService {
     // Verify it exists
     await this.findOne(id, user);
     return this.prisma.property.delete({ where: { id } });
+  }
+
+  async addNote(propertyId: string, content: string, createdById: string, user: JwtPayload) {
+    await this.findOne(propertyId, user); // enforce access scoping
+    return this.prisma.propertyNote.create({
+      data: { propertyId, content, createdById },
+    });
+  }
+
+  async getNotes(propertyId: string, user: JwtPayload) {
+    await this.findOne(propertyId, user); // enforce access scoping
+    return this.prisma.propertyNote.findMany({
+      where: { propertyId },
+      orderBy: { createdAt: 'asc' },
+    });
   }
 
   async assignManager(propertyId: string, userId: string, requestingUser: JwtPayload) {
