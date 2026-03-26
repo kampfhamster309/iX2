@@ -29,6 +29,10 @@ export class SettingsService {
     });
   }
 
+  async getCompanyProfile() {
+    return this.ensureCompanyProfile();
+  }
+
   async getAll() {
     const [system, company] = await Promise.all([
       this.ensureSystemConfig(),

@@ -61,6 +61,14 @@ export function Sidebar() {
       </nav>
 
       <div className="p-4 border-t border-gray-700 space-y-2">
+        {user?.role === 'ADMIN' && (
+          <Link
+            to="/settings"
+            className="flex items-center gap-2 px-3 py-1.5 rounded-md text-xs text-gray-400 hover:bg-gray-700 hover:text-white transition-colors [&.active]:text-white [&.active]:font-medium"
+          >
+            ⚙ {t('nav.settings')}
+          </Link>
+        )}
         <p className="text-xs text-gray-400 truncate">{user?.email}</p>
         <p className="text-xs text-gray-500">{user?.role}</p>
         <div className="flex items-center justify-between">

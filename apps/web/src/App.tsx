@@ -24,6 +24,8 @@ import { ExpenseDetailPage } from '@/pages/accounting/ExpenseDetailPage';
 import { DepositsPage } from '@/pages/accounting/DepositsPage';
 import { DepositDetailPage } from '@/pages/accounting/DepositDetailPage';
 import { ReportsPage } from '@/pages/accounting/ReportsPage';
+import { SettingsPage } from '@/pages/settings/SettingsPage';
+import { CurrencyProvider } from '@/context/CurrencyContext';
 import '@/i18n';
 import '@/index.css';
 
@@ -162,6 +164,13 @@ const accountingReportsRoute = createRoute({
   component: ReportsPage,
 });
 
+const settingsRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/settings',
+  beforeLoad: requireAuth,
+  component: SettingsPage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -179,6 +188,7 @@ const routeTree = rootRoute.addChildren([
   accountingDepositsRoute,
   accountingDepositDetailRoute,
   accountingReportsRoute,
+  settingsRoute,
 ]);
 
 const router = createRouter({ routeTree });
@@ -193,7 +203,9 @@ export default function App() {
   return (
     <AuthProvider>
       <QueryClientProvider client={queryClient}>
-        <RouterProvider router={router} />
+        <CurrencyProvider>
+          <RouterProvider router={router} />
+        </CurrencyProvider>
       </QueryClientProvider>
     </AuthProvider>
   );

@@ -3,20 +3,23 @@ import {
   Body,
   Controller,
   Get,
+  NotFoundException,
   Patch,
   Post,
   Req,
+  Res,
   UseGuards,
 } from '@nestjs/common';
 import { ApiTags, ApiBearerAuth, ApiOperation, ApiConsumes } from '@nestjs/swagger';
 import { JwtAuthGuard } from '../auth/guards/jwt-auth.guard';
 import { RolesGuard } from '../auth/guards/roles.guard';
 import { Roles } from '../auth/decorators/roles.decorator';
+import { Public } from '../auth/decorators/public.decorator';
 import { Role } from '@prisma/client';
 import { SettingsService } from './settings.service';
 import { UpdateSystemConfigDto } from './dto/update-system-config.dto';
 import { UpdateCompanyProfileDto } from './dto/update-company-profile.dto';
-import type { FastifyRequest } from 'fastify';
+import type { FastifyReply, FastifyRequest } from 'fastify';
 
 @ApiTags('settings')
 @ApiBearerAuth()
@@ -45,6 +48,17 @@ export class SettingsController {
   @ApiOperation({ summary: 'Update company profile text fields' })
   updateCompany(@Body() dto: UpdateCompanyProfileDto) {
     return this.settings.updateCompanyProfile(dto);
+  }
+
+  @Get('company/logo')
+  @Public()
+  @ApiOperation({ summary: 'Serve the company logo (public)' })
+  async getLogo(@Res() res: FastifyReply) {
+    const profile = await this.settings.getCompanyProfile();
+    if (!profile.logoPath) throw new NotFoundException('No logo set');
+    return (res as unknown as { sendFile: (path: string) => Promise<void> }).sendFile(
+      profile.logoPath,
+    );
   }
 
   @Post('company/logo')

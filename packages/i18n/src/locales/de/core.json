@@ -146,6 +146,38 @@
     "markPaid": "Als bezahlt markieren",
     "confirmPayment": "Zahlung bestätigen"
   },
+  "settings": {
+    "title": "Einstellungen",
+    "tabs": {
+      "system": "System",
+      "company": "Firmenprofil"
+    },
+    "system": {
+      "title": "Systemeinstellungen",
+      "currency": "Währung",
+      "language": "Standardsprache",
+      "saved": "Einstellungen gespeichert"
+    },
+    "company": {
+      "title": "Firmenprofil",
+      "name": "Firmenname",
+      "legalType": "Rechtsform",
+      "legalTypePlaceholder": "z. B. GmbH, AG, KG",
+      "street": "Straße",
+      "city": "Stadt",
+      "postalCode": "Postleitzahl",
+      "country": "Land",
+      "taxId": "Steuernummer",
+      "vatId": "USt-IdNr.",
+      "phone": "Telefon",
+      "email": "E-Mail",
+      "logo": "Firmenlogo",
+      "logoHint": "PNG oder JPEG, max. 10 MB",
+      "save": "Profil speichern",
+      "saved": "Profil gespeichert"
+    },
+    "accessDenied": "Zugriff verweigert. Administratorrechte erforderlich."
+  },
   "reports": {
     "title": "Finanzberichte",
     "generate": "Erstellen",

@@ -146,6 +146,38 @@
     "markPaid": "Mark as Paid",
     "confirmPayment": "Confirm Payment"
   },
+  "settings": {
+    "title": "Settings",
+    "tabs": {
+      "system": "System",
+      "company": "Company Profile"
+    },
+    "system": {
+      "title": "System Settings",
+      "currency": "Currency",
+      "language": "Default Language",
+      "saved": "Settings saved"
+    },
+    "company": {
+      "title": "Company Profile",
+      "name": "Company Name",
+      "legalType": "Legal Type",
+      "legalTypePlaceholder": "e.g. GmbH, Ltd, LLC",
+      "street": "Street",
+      "city": "City",
+      "postalCode": "Postal Code",
+      "country": "Country",
+      "taxId": "Tax ID",
+      "vatId": "VAT ID",
+      "phone": "Phone",
+      "email": "Email",
+      "logo": "Company Logo",
+      "logoHint": "PNG or JPEG, max 10 MB",
+      "save": "Save Profile",
+      "saved": "Profile saved"
+    },
+    "accessDenied": "Access denied. Admin privileges required."
+  },
   "reports": {
     "title": "Financial Reports",
     "generate": "Generate",
