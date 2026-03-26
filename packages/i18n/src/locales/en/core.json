@@ -17,7 +17,10 @@
     "deposits": "Deposits",
     "reports": "Reports",
     "maintenance": "Maintenance",
-    "settings": "Settings"
+    "settings": "Settings",
+    "users": "Users",
+    "profile": "My Profile",
+    "admin": "Admin"
   },
   "auth": {
     "login": "Log in",
@@ -177,6 +180,52 @@
       "saved": "Profile saved"
     },
     "accessDenied": "Access denied. Admin privileges required."
+  },
+  "users": {
+    "title": "User Management",
+    "newUser": "New User",
+    "editUser": "Edit User",
+    "name": "Name",
+    "firstName": "First Name",
+    "lastName": "Last Name",
+    "username": "Username",
+    "email": "Email",
+    "phone": "Phone",
+    "role": "Role",
+    "status": "Status",
+    "active": "Active",
+    "inactive": "Inactive",
+    "deactivate": "Deactivate",
+    "activate": "Activate",
+    "deactivateConfirm": "Are you sure you want to deactivate this user?",
+    "activateConfirm": "Are you sure you want to reactivate this user?",
+    "password": "Password",
+    "confirmPassword": "Confirm Password",
+    "passwordMismatch": "Passwords do not match",
+    "newPassword": "New Password",
+    "resetPassword": "Reset Password",
+    "resetPasswordHint": "Set a new password for this user (no old password required).",
+    "noUsers": "No users found.",
+    "saved": "Saved",
+    "roles": {
+      "ADMIN": "Admin",
+      "MANAGER": "Manager",
+      "ACCOUNTANT": "Accountant",
+      "MAINTENANCE": "Maintenance",
+      "TENANT": "Tenant"
+    }
+  },
+  "profile": {
+    "title": "My Profile",
+    "profileSection": "Profile Information",
+    "passwordSection": "Change Password",
+    "currentPassword": "Current Password",
+    "newPassword": "New Password",
+    "confirmPassword": "Confirm New Password",
+    "passwordMismatch": "Passwords do not match",
+    "saved": "Changes saved",
+    "passwordChanged": "Password changed",
+    "wrongCurrentPassword": "Current password is incorrect"
   },
   "reports": {
     "title": "Financial Reports",

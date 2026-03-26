@@ -25,6 +25,9 @@ import { DepositsPage } from '@/pages/accounting/DepositsPage';
 import { DepositDetailPage } from '@/pages/accounting/DepositDetailPage';
 import { ReportsPage } from '@/pages/accounting/ReportsPage';
 import { SettingsPage } from '@/pages/settings/SettingsPage';
+import { UsersListPage } from '@/pages/admin/UsersListPage';
+import { UserEditPage } from '@/pages/admin/UserEditPage';
+import { MyProfilePage } from '@/pages/profile/MyProfilePage';
 import { CurrencyProvider } from '@/context/CurrencyContext';
 import '@/i18n';
 import '@/index.css';
@@ -171,6 +174,30 @@ const settingsRoute = createRoute({
   component: SettingsPage,
 });
 
+const adminUsersRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/users',
+  beforeLoad: requireAuth,
+  component: UsersListPage,
+});
+
+const adminUserEditRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/admin/users/$userId',
+  beforeLoad: requireAuth,
+  component: () => {
+    const { userId } = adminUserEditRoute.useParams();
+    return <UserEditPage userId={userId} />;
+  },
+});
+
+const profileRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: '/profile',
+  beforeLoad: requireAuth,
+  component: MyProfilePage,
+});
+
 const routeTree = rootRoute.addChildren([
   indexRoute,
   loginRoute,
@@ -189,6 +216,9 @@ const routeTree = rootRoute.addChildren([
   accountingDepositDetailRoute,
   accountingReportsRoute,
   settingsRoute,
+  adminUsersRoute,
+  adminUserEditRoute,
+  profileRoute,
 ]);
 
 const router = createRouter({ routeTree });

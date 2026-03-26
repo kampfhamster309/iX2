@@ -17,7 +17,10 @@
     "deposits": "Kautionen",
     "reports": "Berichte",
     "maintenance": "Instandhaltung",
-    "settings": "Einstellungen"
+    "settings": "Einstellungen",
+    "users": "Benutzer",
+    "profile": "Mein Profil",
+    "admin": "Admin"
   },
   "auth": {
     "login": "Anmelden",
@@ -177,6 +180,52 @@
       "saved": "Profil gespeichert"
     },
     "accessDenied": "Zugriff verweigert. Administratorrechte erforderlich."
+  },
+  "users": {
+    "title": "Benutzerverwaltung",
+    "newUser": "Neuer Benutzer",
+    "editUser": "Benutzer bearbeiten",
+    "name": "Name",
+    "firstName": "Vorname",
+    "lastName": "Nachname",
+    "username": "Benutzername",
+    "email": "E-Mail",
+    "phone": "Telefon",
+    "role": "Rolle",
+    "status": "Status",
+    "active": "Aktiv",
+    "inactive": "Inaktiv",
+    "deactivate": "Deaktivieren",
+    "activate": "Aktivieren",
+    "deactivateConfirm": "Möchten Sie diesen Benutzer wirklich deaktivieren?",
+    "activateConfirm": "Möchten Sie diesen Benutzer wirklich reaktivieren?",
+    "password": "Passwort",
+    "confirmPassword": "Passwort bestätigen",
+    "passwordMismatch": "Passwörter stimmen nicht überein",
+    "newPassword": "Neues Passwort",
+    "resetPassword": "Passwort zurücksetzen",
+    "resetPasswordHint": "Neues Passwort setzen (kein altes Passwort erforderlich).",
+    "noUsers": "Keine Benutzer gefunden.",
+    "saved": "Gespeichert",
+    "roles": {
+      "ADMIN": "Administrator",
+      "MANAGER": "Manager",
+      "ACCOUNTANT": "Buchhalter",
+      "MAINTENANCE": "Wartung",
+      "TENANT": "Mieter"
+    }
+  },
+  "profile": {
+    "title": "Mein Profil",
+    "profileSection": "Profilinformationen",
+    "passwordSection": "Passwort ändern",
+    "currentPassword": "Aktuelles Passwort",
+    "newPassword": "Neues Passwort",
+    "confirmPassword": "Neues Passwort bestätigen",
+    "passwordMismatch": "Passwörter stimmen nicht überein",
+    "saved": "Änderungen gespeichert",
+    "passwordChanged": "Passwort geändert",
+    "wrongCurrentPassword": "Aktuelles Passwort ist falsch"
   },
   "reports": {
     "title": "Finanzberichte",
