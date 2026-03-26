@@ -1,6 +1,8 @@
 import { Link } from '@tanstack/react-router';
 import { useTranslation } from 'react-i18next';
+import { useQuery } from '@tanstack/react-query';
 import { useAuth } from '@/hooks/useAuth';
+import { api } from '@/lib/api';
 import { LanguageSwitcher } from './LanguageSwitcher';
 import { Button } from '@/components/ui/Button';
 
@@ -26,10 +28,27 @@ export function Sidebar() {
   const { t } = useTranslation();
   const { user, logout } = useAuth();
 
+  const { data: settings } = useQuery({
+    queryKey: ['settings'],
+    queryFn: () =>
+      api.get<{ company: { logoPath: string | null } }>('/settings').then((r) => r.data),
+    staleTime: 5 * 60 * 1000,
+  });
+
+  const hasLogo = Boolean(settings?.company?.logoPath);
+
   return (
     <aside className="hidden md:flex flex-col w-64 min-h-screen bg-gray-900 text-white">
       <div className="p-4 border-b border-gray-700">
-        <h1 className="text-lg font-bold text-primary-400">iX2</h1>
+        {hasLogo ? (
+          <img
+            src="/api/settings/company/logo"
+            alt="Company logo"
+            className="h-10 w-auto object-contain mb-1"
+          />
+        ) : (
+          <h1 className="text-lg font-bold text-primary-400">iX2</h1>
+        )}
         <p className="text-xs text-gray-400 mt-1">{t('app.name')}</p>
       </div>
 
