@@ -83,6 +83,13 @@ export class TenantsService {
         ...(dto.phone !== undefined ? { phone: dto.phone } : {}),
         ...(dto.dateOfBirth !== undefined ? { dateOfBirth: new Date(dto.dateOfBirth) } : {}),
         ...(dto.address !== undefined ? { address: dto.address } : {}),
+        ...(dto.isCompany !== undefined ? { isCompany: dto.isCompany } : {}),
+        ...(dto.companyName !== undefined ? { companyName: dto.companyName } : {}),
+        ...(dto.legalForm !== undefined ? { legalForm: dto.legalForm } : {}),
+        ...(dto.taxId !== undefined ? { taxId: dto.taxId } : {}),
+        ...(dto.commercialRegisterNumber !== undefined
+          ? { commercialRegisterNumber: dto.commercialRegisterNumber }
+          : {}),
       },
     });
   }
